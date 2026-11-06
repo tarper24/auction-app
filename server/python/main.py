@@ -147,7 +147,7 @@ def place_bid(listing_id: str, bid: BidRequest):
 
     listing.current_bid = bid.amount
     listing.current_bidder = bid.bidder.strip()
-    listing.bid_history.append(bid)
+    listing.bid_history.insert(0, bid)
 
     return listing
 
@@ -160,4 +160,4 @@ def get_bid_history(listing_id: str):
     listing = next((l for l in listings if l.id == listing_id), None)
     if listing is None:
         raise HTTPException(status_code=404, detail="Listing not found")
-    return list(reversed(listing.bid_history))
+    return listing.bid_history
