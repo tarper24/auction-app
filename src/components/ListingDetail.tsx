@@ -58,6 +58,28 @@ export default function ListingDetail({ listing, onBidSuccess }: Props) {
 					<span className="meta-label">Auction Ends</span>
 					<span className="meta-value">{formatDate(listing.endsAt)}</span>
 				</div>
+				<div className="meta-row">
+					<span className="meta-label">Bid History</span>
+					<span className="meta-value">
+						{listing.bidHistory.length} {listing.bidHistory.length === 1 ? "bid" : "bids"}
+					</span>
+				</div>
+			</div>
+
+			<div className="listing-detail__bid-history">
+				<h3>Bid History</h3>
+				{listing.bidHistory.length === 0 ? (
+					<div className="listing-detail__no-bids">
+						No bids yet.
+					</div>
+				) : (
+					listing.bidHistory.map((bid, index) => (
+						<div key={index} className="bid-history">
+							<div className="history-bidder">{bid.bidder}</div>
+							<div className="history-amount">${bid.amount.toLocaleString()}</div>
+						</div>
+					))
+				)}
 			</div>
 
 			{listing.status === "active" && (
