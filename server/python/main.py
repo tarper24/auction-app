@@ -79,15 +79,27 @@ app.add_middleware(
     response_model=Listings,
     response_model_by_alias=True,
 )
-def get_listings(page: int = 1, page_size: int = 10):
+def get_listings(
+    page: int = 1,
+    page_size: int = 10,
+    category: Optional[str] = None,
+    active: Optional[bool] = None,
+    price: Optional[float] = None,
+):
+    filtered_listings = [
+        l for l in listings
+        if (category is None or l.category == category)
+        and (active is None or (l.status == "active") == active)
+        and (price is None or l.current_bid <= price)
+    ]
     start = (page - 1) * page_size
     end = start + page_size
     return Listings(
-        listings=listings[start:end],
-        total=len(listings),
+        listings=filtered_listings[start:end],
+        total=len(filtered_listings),
         page=page,
         page_size=page_size,
-        pages=(len(listings) + page_size - 1) // page_size,
+        pages=(len(filtered_listings) + page_size - 1) // page_size,
     )
 
 
