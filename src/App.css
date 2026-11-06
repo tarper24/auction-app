@@ -277,6 +277,10 @@ body {
 	color: #999;
 }
 
+.listing-card__time--ending-soon {
+	color: #d9534f;
+}
+
 /* ============================================================
    Category badges
    ============================================================ */
@@ -446,6 +450,14 @@ body {
 
 .bid-history:last-child {
 	border-bottom: none;
+}
+
+.listing-detail__time--ending-soon {
+	color: #d9534f;
+}
+
+.listing-detail__time--ended {
+	color: #6c757d;
 }
 
 /* ============================================================
