@@ -7,21 +7,26 @@ import type { Listing } from "./types";
 
 export default function App() {
 	const [listings, setListings] = useState<Listing[]>([]);
+	const [page, setPage] = useState(1);
+	const [pageSize, setPageSize] = useState(10);
+	const [category, setCategory] = useState<string>("");
+	const [active, setActive] = useState<boolean | null>(null);
+	const [price, setPrice] = useState<number | "">("");
 	const [selectedId, setSelectedId] = useState<string | null>(null);
 	const [showCreateForm, setShowCreateForm] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		getListings()
-			.then((data) => setListings(data))
+		getListings(page, pageSize, category ? category : undefined, active ?? undefined, price ? price : undefined)
+			.then((data) => setListings(data.listings))
 			.catch((err) =>
 				setError(
 					err instanceof Error ? err.message : "Failed to load listings",
 				),
 			)
 			.finally(() => setLoading(false));
-	}, []);
+	}, [page, pageSize, category, active, price]);
 
 	const selectedListing = listings.find((l) => l.id === selectedId) ?? null;
 
@@ -45,6 +50,20 @@ export default function App() {
 				<aside className="panel panel--left">
 					<div className="panel__heading-row">
 						<h2 className="panel__heading">Listings</h2>
+						<span className="pagination__page-size">
+							Page Size:
+							<select
+								value={pageSize}
+								onChange={(e) => {
+									setPageSize(Number(e.target.value));
+									setPage(1);
+								}}
+							>
+								<option value={5}>5</option>
+								<option value={10}>10</option>
+								<option value={20}>20</option>
+							</select>
+						</span>
 						<button
 							type="button"
 							className="panel__heading-action"
@@ -55,6 +74,52 @@ export default function App() {
 						>
 							+ New
 						</button>
+					</div>
+					<div className="filters">
+						<label>
+							Category:
+							<select
+								value={category ?? ""}
+								onChange={(e) => setCategory(e.target.value)}
+							>
+								<option value="">All</option>
+								<option value="tractor">Tractor</option>
+								<option value="combine">Combine</option>
+								<option value="implement">Implement</option>
+								<option value="attachment">Attachment</option>
+							</select>
+						</label>
+						<label>
+							<button
+								type="button"
+								className={active === true ? "active" : ""}
+								onClick={() => setActive(true)}
+							>
+								Active
+							</button>
+							<button
+								type="button"
+								className={active === false ? "active" : ""}
+								onClick={() => setActive(false)}
+							>
+								Closed
+							</button>
+							<button
+								type="button"
+								className={active === null ? "active" : ""}
+								onClick={() => setActive(null)}
+							>
+								All
+							</button>
+						</label>
+						<label>
+							Max Price:
+							<input
+								type="number"
+								value={price}
+								onChange={(e) => setPrice(Number(e.target.value))}
+							/>
+						</label>
 					</div>
 					{loading && <div className="state-message">Loading listings…</div>}
 					{error && (
@@ -72,6 +137,23 @@ export default function App() {
 							))}
 						</div>
 					)}
+					<div className="pagination">
+						<button
+							type="button"
+							disabled={page === 1}
+							onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+						>
+							&laquo;
+						</button>
+						<span className="pagination__page">{page}</span>
+						<button
+							type="button"
+							disabled={listings.length < pageSize}
+							onClick={() => setPage((prev) => prev + 1)}
+						>
+							&raquo;
+						</button>
+					</div>
 				</aside>
 				<main className="panel panel--right">
 					{showCreateForm ? (

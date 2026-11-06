@@ -119,6 +119,102 @@ body {
 }
 
 /* ============================================================
+   Pagination
+   ============================================================ */
+.pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 16px;
+}
+
+.pagination button {
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #2596be;
+	background: none;
+	border: 1px solid #2596be;
+	border-radius: 5px;
+	padding: 3px 10px;
+	cursor: pointer;
+	transition: background 0.15s, color 0.15s;
+	margin: 0 4px;
+}
+
+.pagination button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.pagination__page {
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #555;
+	margin: 0 8px;
+}
+
+.pagination__page-size {
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #555;
+	margin-right: 8px;
+}
+
+.pagination__page-size select {
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #555;
+	margin-left: 4px;
+}
+
+/* ============================================================
+   Filters
+   ============================================================ */
+.filters {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	margin-bottom: 16px;
+}
+
+.filters label {
+	display: flex;
+	flex-direction: column;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #555;
+}
+
+.filters input,
+.filters select {
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #555;
+	margin-top: 4px;
+	padding: 3px 6px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.filters button {
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #2596be;
+	background: none;
+	border: 1px solid #2596be;
+	border-radius: 5px;
+	padding: 3px 10px;
+	cursor: pointer;
+	transition: background 0.15s, color 0.15s;
+	margin-right: 4px;
+}
+
+.filters button.active {
+	background: #2596be;
+	color: #fff;
+}
+
+/* ============================================================
    Listing card
    ============================================================ */
 .listing-card {
@@ -348,7 +444,7 @@ body {
 	justify-content: space-between;
 }
 
-.bid-h:last-child {
+.bid-history:last-child {
 	border-bottom: none;
 }
 
