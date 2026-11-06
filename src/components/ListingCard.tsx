@@ -6,15 +6,15 @@ interface Props {
 	onClick: () => void;
 }
 
-function timeRemaining(endsAt: string, status: string): string {
-	if (status === "closed") return "Ended";
+function timeRemaining(endsAt: string, status: string): [string, string] {
+	if (status === "closed") return ["Ended", "listing-card__time--ended"];
 	const diff = new Date(endsAt).getTime() - Date.now();
-	if (diff <= 0) return "Ended";
+	if (diff <= 0) return ["Ended", "listing-card__time--ended"];
 	const days = Math.floor(diff / 86_400_000);
 	const hours = Math.floor((diff % 86_400_000) / 3_600_000);
-	if (days > 0) return `${days} day${days === 1 ? "" : "s"} left`;
-	if (hours > 0) return `${hours} hour${hours === 1 ? "" : "s"} left`;
-	return "Less than an hour left";
+	if (days > 0) return [`${days} day${days === 1 ? "" : "s"} left`, ""];
+	if (hours > 0) return [`${hours} hour${hours === 1 ? "" : "s"} left`, ""];
+	return ["Less than an hour left", "listing-card__time--ending-soon"];
 }
 
 export default function ListingCard({ listing, isSelected, onClick }: Props) {
@@ -44,7 +44,10 @@ export default function ListingCard({ listing, isSelected, onClick }: Props) {
 				<div
 					className={`listing-card__time ${closed ? "listing-card__time--ended" : ""}`}
 				>
-					{timeRemaining(listing.endsAt, listing.status)}
+					{(() => {
+						const [text, className] = timeRemaining(listing.endsAt, listing.status);
+						return <span className={className}>{text}</span>;
+					})()}
 				</div>
 			</div>
 		</div>
