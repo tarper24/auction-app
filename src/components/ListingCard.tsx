@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { Listing } from "../types";
 
 interface Props {
@@ -6,9 +7,9 @@ interface Props {
 	onClick: () => void;
 }
 
-function timeRemaining(endsAt: string, status: string): [string, string] {
+function timeRemaining(endsAt: string, status: string, now: number): [string, string] {
 	if (status === "closed") return ["Ended", "listing-card__time--ended"];
-	const diff = new Date(endsAt).getTime() - Date.now();
+	const diff = new Date(endsAt).getTime() - now;
 	if (diff <= 0) return ["Ended", "listing-card__time--ended"];
 	const days = Math.floor(diff / 86_400_000);
 	const hours = Math.floor((diff % 86_400_000) / 3_600_000);
@@ -19,6 +20,14 @@ function timeRemaining(endsAt: string, status: string): [string, string] {
 
 export default function ListingCard({ listing, isSelected, onClick }: Props) {
 	const closed = listing.status === "closed";
+	const [now, setNow] = useState(() => Date.now());
+
+	useEffect(() => {
+		const timer = window.setInterval(() => setNow(Date.now()), 1000);
+		return () => window.clearInterval(timer);
+	}, []);
+
+	const [text, className] = timeRemaining(listing.endsAt, listing.status, now);
 
 	return (
 		<div
@@ -44,10 +53,7 @@ export default function ListingCard({ listing, isSelected, onClick }: Props) {
 				<div
 					className={`listing-card__time ${closed ? "listing-card__time--ended" : ""}`}
 				>
-					{(() => {
-						const [text, className] = timeRemaining(listing.endsAt, listing.status);
-						return <span className={className}>{text}</span>;
-					})()}
+					<span className={className}>{text}</span>
 				</div>
 			</div>
 		</div>

@@ -452,6 +452,14 @@ body {
 	border-bottom: none;
 }
 
+.listing-detail__time--ending-soon {
+	color: #d9534f;
+}
+
+.listing-detail__time--ended {
+	color: #6c757d;
+}
+
 /* ============================================================
    Bid form
    ============================================================ */
