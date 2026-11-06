@@ -8,7 +8,7 @@
 		"current_bid": 185000,
 		"current_bidder": null,
 		"status": "active",
-		"ends_at": "2026-04-11T12:00:00.000Z",
+		"ends_at": "2026-11-11T12:00:00.000Z",
 		"image_url": "https://placehold.co/400x300?text=2019+John+Deere+8R+340+Tractor"
 	},
 	{
@@ -20,7 +20,7 @@
 		"current_bid": 320000,
 		"current_bidder": null,
 		"status": "active",
-		"ends_at": "2026-04-09T12:00:00.000Z",
+		"ends_at": "2026-11-09T12:00:00.000Z",
 		"image_url": "https://placehold.co/400x300?text=2021+Case+IH+Axial-Flow+250+Combine"
 	},
 	{
@@ -32,7 +32,7 @@
 		"current_bid": 45000,
 		"current_bidder": null,
 		"status": "active",
-		"ends_at": "2026-04-13T12:00:00.000Z",
+		"ends_at": "2026-11-13T12:00:00.000Z",
 		"image_url": "https://placehold.co/400x300?text=2018+Kubota+SVL75-2+Skid+Steer"
 	},
 	{
@@ -44,7 +44,7 @@
 		"current_bid": 28000,
 		"current_bidder": null,
 		"status": "active",
-		"ends_at": "2026-04-08T12:00:00.000Z",
+		"ends_at": "2026-11-08T12:00:00.000Z",
 		"image_url": "https://placehold.co/400x300?text=2020+Kinze+1050+Grain+Cart"
 	},
 	{
@@ -56,7 +56,7 @@
 		"current_bid": 4200,
 		"current_bidder": null,
 		"status": "active",
-		"ends_at": "2026-04-15T12:00:00.000Z",
+		"ends_at": "2026-11-15T12:00:00.000Z",
 		"image_url": "https://placehold.co/400x300?text=Frontier+RC2060+Rotary+Cutter"
 	},
 	{
@@ -68,7 +68,7 @@
 		"current_bid": 72000,
 		"current_bidder": null,
 		"status": "active",
-		"ends_at": "2026-04-10T12:00:00.000Z",
+		"ends_at": "2026-11-10T12:00:00.000Z",
 		"image_url": "https://placehold.co/400x300?text=2017+New+Holland+T6.180+Tractor"
 	},
 	{
@@ -80,7 +80,7 @@
 		"current_bid": 38500,
 		"current_bidder": null,
 		"status": "active",
-		"ends_at": "2026-04-12T12:00:00.000Z",
+		"ends_at": "2026-11-12T12:00:00.000Z",
 		"image_url": "https://placehold.co/400x300?text=2022+Landoll+7431+Field+Cultivator"
 	},
 	{
@@ -92,7 +92,7 @@
 		"current_bid": 52000,
 		"current_bidder": null,
 		"status": "closed",
-		"ends_at": "2026-04-05T12:00:00.000Z",
+		"ends_at": "2026-11-05T12:00:00.000Z",
 		"image_url": "https://placehold.co/400x300?text=2016+MacDon+FD75+Draper+Header"
 	}
 ]
