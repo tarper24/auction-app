@@ -160,4 +160,4 @@ def get_bid_history(listing_id: str):
     listing = next((l for l in listings if l.id == listing_id), None)
     if listing is None:
         raise HTTPException(status_code=404, detail="Listing not found")
-    return listing.bid_history
+    return list(reversed(listing.bid_history))
