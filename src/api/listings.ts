@@ -41,3 +41,9 @@ export async function placeBid(
 	}
 	return res.json();
 }
+
+export async function getBidHistory(listingId: string): Promise<{ bidder: string; amount: number }[]> {
+	const res = await fetch(`/api/listings/${listingId}/bids`);
+	if (!res.ok) throw new Error("Failed to fetch bid history");
+	return res.json();
+}
