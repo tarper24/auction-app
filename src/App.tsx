@@ -7,21 +7,23 @@ import type { Listing } from "./types";
 
 export default function App() {
 	const [listings, setListings] = useState<Listing[]>([]);
+	const [page, setPage] = useState(1);
+	const [pageSize, setPageSize] = useState(10);
 	const [selectedId, setSelectedId] = useState<string | null>(null);
 	const [showCreateForm, setShowCreateForm] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		getListings()
-			.then((data) => setListings(data))
+		getListings(page, pageSize)
+			.then((data) => setListings(data.listings))
 			.catch((err) =>
 				setError(
 					err instanceof Error ? err.message : "Failed to load listings",
 				),
 			)
 			.finally(() => setLoading(false));
-	}, []);
+	}, [page, pageSize]);
 
 	const selectedListing = listings.find((l) => l.id === selectedId) ?? null;
 
@@ -45,6 +47,17 @@ export default function App() {
 				<aside className="panel panel--left">
 					<div className="panel__heading-row">
 						<h2 className="panel__heading">Listings</h2>
+						<span className="pagination__page-size">
+							Page Size:
+							<select
+								value={pageSize}
+								onChange={(e) => setPageSize(Number(e.target.value))}
+							>
+								<option value={5}>5</option>
+								<option value={10}>10</option>
+								<option value={20}>20</option>
+							</select>
+						</span>
 						<button
 							type="button"
 							className="panel__heading-action"
@@ -72,6 +85,23 @@ export default function App() {
 							))}
 						</div>
 					)}
+					<div className="pagination">
+						<button
+							type="button"
+							disabled={page === 1}
+							onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+						>
+							&laquo;
+						</button>
+						<span className="pagination__page">{page}</span>
+						<button
+							type="button"
+							disabled={listings.length < pageSize}
+							onClick={() => setPage((prev) => prev + 1)}
+						>
+							&raquo;
+						</button>
+					</div>
 				</aside>
 				<main className="panel panel--right">
 					{showCreateForm ? (
