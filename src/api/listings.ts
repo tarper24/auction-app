@@ -1,7 +1,7 @@
 import type { Listing } from "../types";
 
-export async function getListings(page: number, pageSize: number): Promise<{ listings: Listing[]; total: number; page: number; page_size: number; pages: number }> {
-	const res = await fetch(`/api/listings?page=${page}&page_size=${pageSize}`);
+export async function getListings(page: number, pageSize: number, category?: string, active?: boolean, price?: number): Promise<{ listings: Listing[]; total: number; page: number; page_size: number; pages: number }> {
+	const res = await fetch(`/api/listings?page=${page}&page_size=${pageSize}${category ? `&category=${category}` : ""}${active !== undefined ? `&active=${active}` : ""}${price !== undefined ? `&price=${price}` : ""}`);
 	if (!res.ok) throw new Error("Failed to fetch listings");
 	return res.json();
 }

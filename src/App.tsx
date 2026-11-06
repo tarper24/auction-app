@@ -9,13 +9,16 @@ export default function App() {
 	const [listings, setListings] = useState<Listing[]>([]);
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(10);
+	const [category, setCategory] = useState<string>("");
+	const [active, setActive] = useState<boolean | null>(null);
+	const [price, setPrice] = useState<number | "">("");
 	const [selectedId, setSelectedId] = useState<string | null>(null);
 	const [showCreateForm, setShowCreateForm] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		getListings(page, pageSize)
+		getListings(page, pageSize, category ? category : undefined, active ?? undefined, price ? price : undefined)
 			.then((data) => setListings(data.listings))
 			.catch((err) =>
 				setError(
@@ -23,7 +26,7 @@ export default function App() {
 				),
 			)
 			.finally(() => setLoading(false));
-	}, [page, pageSize]);
+	}, [page, pageSize, category, active, price]);
 
 	const selectedListing = listings.find((l) => l.id === selectedId) ?? null;
 
@@ -51,7 +54,10 @@ export default function App() {
 							Page Size:
 							<select
 								value={pageSize}
-								onChange={(e) => setPageSize(Number(e.target.value))}
+								onChange={(e) => {
+									setPageSize(Number(e.target.value));
+									setPage(1);
+								}}
 							>
 								<option value={5}>5</option>
 								<option value={10}>10</option>
@@ -68,6 +74,52 @@ export default function App() {
 						>
 							+ New
 						</button>
+					</div>
+					<div className="filters">
+						<label>
+							Category:
+							<select
+								value={category ?? ""}
+								onChange={(e) => setCategory(e.target.value)}
+							>
+								<option value="">All</option>
+								<option value="tractor">Tractor</option>
+								<option value="combine">Combine</option>
+								<option value="implement">Implement</option>
+								<option value="attachment">Attachment</option>
+							</select>
+						</label>
+						<label>
+							<button
+								type="button"
+								className={active === true ? "active" : ""}
+								onClick={() => setActive(true)}
+							>
+								Active
+							</button>
+							<button
+								type="button"
+								className={active === false ? "active" : ""}
+								onClick={() => setActive(false)}
+							>
+								Closed
+							</button>
+							<button
+								type="button"
+								className={active === null ? "active" : ""}
+								onClick={() => setActive(null)}
+							>
+								All
+							</button>
+						</label>
+						<label>
+							Max Price:
+							<input
+								type="number"
+								value={price}
+								onChange={(e) => setPrice(Number(e.target.value))}
+							/>
+						</label>
 					</div>
 					{loading && <div className="state-message">Loading listings…</div>}
 					{error && (
