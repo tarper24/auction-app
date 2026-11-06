@@ -13,6 +13,12 @@ from pydantic.alias_generators import to_camel
 # Models
 # ============================================================
 
+class Listings(BaseModel):
+    listings: list[Listing] = []
+    total: int
+    page: int
+    page_size: int
+    pages: int
 
 class Listing(BaseModel):
     """Wire JSON matches the TypeScript server (camelCase keys)."""
@@ -70,11 +76,19 @@ app.add_middleware(
 
 @app.get(
     "/api/listings",
-    response_model=list[Listing],
+    response_model=Listings,
     response_model_by_alias=True,
 )
-def get_listings():
-    return listings
+def get_listings(page: int = 1, page_size: int = 10):
+    start = (page - 1) * page_size
+    end = start + page_size
+    return Listings(
+        listings=listings[start:end],
+        total=len(listings),
+        page=page,
+        page_size=page_size,
+        pages=(len(listings) + page_size - 1) // page_size,
+    )
 
 
 @app.post(
